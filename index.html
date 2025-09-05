@@ -3,560 +3,468 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UP-X Casino</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Кирилл Коржиков - Энциклопедия</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg-dark: #0f1524;
-            --bg-card: #1a2236;
-            --primary: #2563eb;
-            --accent: #3b82f6;
-            --text: #ffffff;
-            --text-secondary: #94a3b8;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --border: #2d3748;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Georgia', serif;
         }
-
+        
         body {
-            background: linear-gradient(135deg, var(--bg-dark), #0a0f1a);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 16px;
-        }
-
-        .container {
+            background-color: #f6f6f6;
+            color: #202122;
+            line-height: 1.6;
+            padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
+            background-image: linear-gradient(to bottom, #f9f9f9, #e6e6e6);
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            background: var(--bg-card);
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border);
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        .nav-item {
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .nav-item.active {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: var(--text);
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 20px;
-        }
-
-        .games-section {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid var(--border);
-        }
-
-        .games-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .game-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 15px;
+        
+        header {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e3a8a 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
             text-align: center;
-            transition: transform 0.3s ease;
-            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
         }
-
-        .game-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary);
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.1) 0%,
+                transparent 20%,
+                transparent 80%,
+                rgba(0, 0, 0, 0.1) 100%
+            );
+            transform: rotate(30deg);
         }
-
-        .game-icon {
-            font-size: 32px;
+        
+        h1 {
+            font-size: 3rem;
             margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
-
-        .bets-section {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid var(--border);
-            margin-top: 20px;
-        }
-
-        .bet-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .bet-item:last-child {
-            border-bottom: none;
-        }
-
-        .bet-phone {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .bet-amount {
-            font-weight: bold;
-        }
-
-        .bet-multiplier {
-            color: var(--success);
-            font-weight: bold;
-        }
-
-        .bet-win {
-            color: var(--success);
-            font-weight: bold;
-        }
-
-        .bet-lose {
-            color: var(--danger);
-            font-weight: bold;
-        }
-
-        .sidebar {
-            background: var(--bg-card);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid var(--border);
-        }
-
-        .user-card {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .balance {
-            font-size: 24px;
-            font-weight: bold;
-            margin: 10px 0;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .bet-controls {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            border: 1px solid var(--border);
-        }
-
-        .bet-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 12px;
-            color: var(--text);
-            font-size: 16px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .bet-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .bet-btn {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            border-radius: 6px;
-            padding: 8px;
-            color: var(--text);
-            cursor: pointer;
-            transition: opacity 0.3s ease;
-        }
-
-        .bet-btn:hover {
+        
+        .subtitle {
+            font-style: italic;
             opacity: 0.9;
+            font-size: 1.2rem;
+            position: relative;
         }
-
-        .action-btn {
-            width: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            color: var(--text);
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            margin-top: 10px;
+        
+        .content-container {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
         }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
+        
+        .main-content {
+            flex: 2;
+            min-width: 300px;
         }
-
-        .game-area {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
+        
+        .sidebar {
+            flex: 1;
+            min-width: 280px;
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border: 1px solid #a2a9b1;
+            border-radius: 10px;
             padding: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 20px 20px 0;
+            border-style: solid;
+            border-color: #ddd #f8f9fa;
+        }
+        
+        .info-box h3 {
             text-align: center;
-            border: 1px solid var(--border);
-            margin-top: 20px;
+            border-bottom: 2px solid #2c5aa0;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            color: #2c5aa0;
+            font-size: 1.4rem;
         }
-
-        .multiplier {
-            font-size: 32px;
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .info-label {
             font-weight: bold;
-            margin: 20px 0;
-            background: linear-gradient(135deg, var(--success), var(--warning));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            min-width: 140px;
+            color: #444;
         }
-
-        .auto-stop {
+        
+        .info-value {
+            color: #2c5aa0;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section h2 {
+            color: #2c5aa0;
+            border-bottom: 2px solid #2c5aa0;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            font-size: 1.8rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
         }
-
-        .history-section {
-            background: var(--bg-card);
-            border-radius: 12px;
+        
+        .section h2 i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .quote {
+            background: linear-gradient(to right, #f9f9f9, #f0f5ff);
+            border-left: 5px solid #2c5aa0;
             padding: 20px;
-            border: 1px solid var(--border);
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            color: #2c5aa0;
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: Georgia, serif;
+        }
+        
+        .timeline {
+            margin: 25px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #2c5aa0;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #2c5aa0;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #2c5aa0;
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 5px;
+        }
+        
+        .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .fact-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ddd;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .fact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fact-card h4 {
+            color: #2c5aa0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            color: #54595d;
+            font-size: 0.9rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-top: 20px;
         }
-
-        .history-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
+        
+        .category {
+            background: #e9ecef;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #2c5aa0;
         }
-
-        .history-item {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
-            padding: 10px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .win {
-            border-color: var(--success);
-        }
-
-        .lose {
-            border-color: var(--danger);
-        }
-
-        /* Адаптивность */
+        
         @media (max-width: 768px) {
-            .main-grid {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .fact-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .nav {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .games-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        /* Анимации */
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .pulse {
-            animation: pulse 2s infinite;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Шапка -->
-        <div class="header">
-            <div class="logo">UP-X</div>
-            <div class="nav">
-                <a href="#" class="nav-item active">Игры</a>
-                <a href="#" class="nav-item">Ставки</a>
-                <a href="#" class="nav-item">Турниры</a>
-                <a href="#" class="nav-item">Ранги</a>
-                <a href="#" class="nav-item">Бонусы</a>
+    <header>
+        <h1>Кирилл Коржиков</h1>
+        <p class="subtitle">Ученик гимназии №44 в Краснодарском крае</p>
+    </header>
+    
+    <div class="content-container">
+        <div class="main-content">
+            <div class="section">
+                <h2><i class="fas fa-user"></i> Биография</h2>
+                <p>Кирилл Коржиков — ученик гимназии №44 в Краснодарском крае. Родился в неблагополучной семье и был оставлен родителями в возрасте до года. Был усыновлен приемными родителями, однако отец вскоре покинул семью, и воспитанием Кирилла занимается приемная мать.</p>
+                
+                <p>Несмотря на сложные жизненные обстоятельства, Кирилл проявляет интерес к пиротехнике и часто проводит время с друзьями, запуская петарды и фейерверки. В настоящее время встречается с девушкой, которая, по словам одноклассников, имеет внешность, не соответствующую общепринятым стандартам красоты.</p>
+                
+                <div class="quote">
+                    "Кирилл всегда был непростым ребенком. После того как его приемный отец ушел, он стал еще более замкнутым и начал увлекаться пиротехникой. Мы стараемся поддерживать его, но подростковый возраст в сочетании с травмой abandonment создают серьезные challenges." — Классный руководитель.
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2010</div>
+                        <div>Был оставлен биологическими родителями и помещен в детский дом</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2011</div>
+                        <div>Усыновлен приемной семьей</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2015</div>
+                        <div>Приемный отец покидает семью</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2020</div>
+                        <div>Начинает увлекаться пиротехникой</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2023</div>
+                        <div>Начинает встречаться с Анастасией</div>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <div class="main-grid">
-            <!-- Основная секция -->
-            <div class="main-content">
-                <!-- Секция игр -->
-                <div class="games-section">
-                    <h2>ИГРАЙ В ЛУЧШЕЕ</h2>
-                    <div class="games-grid">
-                        <div class="game-card">
-                            <div class="game-icon">🚀</div>
-                            <div>UP-X</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">🎰</div>
-                            <div>Рулетка</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">🎁</div>
-                            <div>Кейсы</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">🎯</div>
-                            <div>Классик</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">🎲</div>
-                            <div>DICE</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">🃏</div>
-                            <div>Капо</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">📊</div>
-                            <div>Hilo</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">💣</div>
-                            <div>Минёр</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">📈</div>
-                            <div>Лесенка</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">🪙</div>
-                            <div>Монетка</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">🎴</div>
-                            <div>Карточки</div>
-                        </div>
-                        <div class="game-card">
-                            <div class="game-icon">🔽</div>
-                            <div>Plinko</div>
-                        </div>
+            
+            <div class="section">
+                <h2><i class="fas fa-graduation-cap"></i> Образование</h2>
+                <p>Кирилл учится в гимназии №44 в Краснодарском крае. Успеваемость ниже средней, особенно по точным наукам. По словам учителей, имеет способности к гуманитарным предметам, но не проявляет достаточного усердия в учебе.</p>
+                
+                <p>Часто пропускает занятия без уважительной причины, имеет проблемы с поведением на уроках. Неоднократно был замечен в курении на территории школы.</p>
+                
+                <div class="fact-grid">
+                    <div class="fact-card">
+                        <h4>Успеваемость</h4>
+                        <p>Средний балл: 3.2</p>
+                        <p>Лучший предмет: Литература</p>
+                        <p>Худший предмет: Математика</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Поведение</h4>
+                        <p>Замечания: 12 за год</p>
+                        <p>Вызовы к директору: 3</p>
+                        <p>Прогулы: 18% занятий</p>
+                    </div>
+                    <div class="fact-card">
+                        <h4>Достижения</h4>
+                        <p>Участие в конкурсе рассказов (2022)</p>
+                        <p>2 место в школьных соревнованиях по армрестлингу</p>
                     </div>
                 </div>
-
-                <!-- Секция ставок -->
-                <div class="bets-section">
-                    <h2>Последние ставки</h2>
-                    <div class="bets-list">
-                        <div class="bet-item">
-                            <div class="bet-phone">150*****</div>
-                            <div class="bet-amount">64.00 ₽</div>
-                            <div class="bet-multiplier">50%</div>
-                            <div class="bet-win">128.00 ₽</div>
-                        </div>
-                        <div class="bet-item">
-                            <div class="bet-phone">150*****</div>
-                            <div class="bet-amount">64.00 ₽</div>
-                            <div class="bet-multiplier">50%</div>
-                            <div class="bet-win">128.00 ₽</div>
-                        </div>
-                        <div class="bet-item">
-                            <div class="bet-phone">155*****</div>
-                            <div class="bet-amount">1.00 ₽</div>
-                            <div class="bet-multiplier">4.85%</div>
-                            <div class="bet-lose">0.00 ₽</div>
-                        </div>
-                        <div class="bet-item">
-                            <div class="bet-phone">155*****</div>
-                            <div class="bet-amount">1.00 ₽</div>
-                            <div class="bet-multiplier">4.85%</div>
-                            <div class="bet-lose">0.00 ₽</div>
-                        </div>
-                        <div class="bet-item">
-                            <div class="bet-phone">156*****</div>
-                            <div class="bet-amount">1.00 ₽</div>
-                            <div class="bet-multiplier">4.85%</div>
-                            <div class="bet-lose">0.00 ₽</div>
-                        </div>
-                    </div>
+            </div>
+            
+            <div class="section">
+                <h2><i class="fas fa-heart"></i> Личная жизнь</h2>
+                <p>Кирилл встречается с девушкой по имени Анастасия, которая также учится в гимназии №44. По словам одноклассников, их отношения начались в начале 2023 года. Анастасия имеет полную фигуру и не отличается активной социальной жизнью.</p>
+                
+                <p>Лучшим другом Кирилла является Григорий (Гриша), с которым они проводят большую часть свободного времени. Вместе они увлекаются пиротехникой и компьютерными играми.</p>
+                
+                <div class="quote">
+                    "Мы с Кириллом понимаем друг друга с полуслова. У нас похожие интересы и проблемы. Да, мы иногда делаем глупости с петардами, но это же лучше, чем сидеть в подворотне и пить пиво." — Григорий, лучший друг.
                 </div>
-
-                <!-- Игровая зона -->
-                <div class="game-area">
-                    <h2>UP-X Игра</h2>
-                    <div class="multiplier">x3.94</div>
-                    <div class="auto-stop">
-                        <span>Автостоп: x2.00</span>
+            </div>
+            
+            <div class="section">
+                <h2><i class="fas fa-fire"></i> Увлечения</h2>
+                <p>Основное увлечение Кирилла — пиротехника. Он регулярно покупает и взрывает петарды различной мощности вместе с друзьями. Неоднократно был замечен за этим занятием в парках и на пустырях города.</p>
+                
+                <p>Также увлекается компьютерными играми, особенно шутерами и стратегиями. Проводит за играми несколько часов в день, что негативно сказывается на его успеваемости в школе.</p>
+                
+                <div class="fact-grid">
+                    <div class="fact-card">
+                        <h4>Пиротехника</h4>
+                        <p>Любимые петарды: "Корсар-5"</p>
+                        <p>Частота использования: 2-3 раза в неделю</p>
+                        <p>Места: Парки, пустыри, заброшенные стройки</p>
                     </div>
-                    <div class="bet-controls">
-                        <input type="number" class="bet-input" value="1.00" min="1">
-                        <div class="bet-buttons">
-                            <button class="bet-btn">½</button>
-                            <button class="bet-btn">x2</button>
-                            <button class="bet-btn">Макс</button>
-                        </div>
-                        <button class="action-btn pulse">ИГРАТЬ</button>
+                    <div class="fact-card">
+                        <h4>Компьютерные игры</h4>
+                        <p>Любимая игра: Counter-Strike 2</p>
+                        <p>Время в играх: 3-4 часа в день</p>
+                        <p>Уровень: выше среднего</p>
                     </div>
-                </div>
-
-                <!-- История игр -->
-                <div class="history-section">
-                    <h2>История игр</h2>
-                    <div class="history-grid">
-                        <div class="history-item win">x2.1</div>
-                        <div class="history-item lose">x0.0</div>
-                        <div class="history-item win">x1.5</div>
-                        <div class="history-item win">x3.2</div>
-                        <div class="history-item lose">x0.0</div>
-                        <div class="history-item win">x2.8</div>
-                        <div class="history-item lose">x0.0</div>
-                        <div class="history-item win">x1.9</div>
+                    <div class="fact-card">
+                        <h4>Другие увлечения</h4>
+                        <p>Просмотр фильмов</p>
+                        <p>Прогулки с друзьями</p>
+                        <p>Прослушивание музыки (рэп, рок)</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Боковая панель -->
-            <div class="sidebar">
-                <div class="user-card">
-                    <h3>Ваш баланс</h3>
-                    <div class="balance">1,000.00 ₽</div>
-                    <div class="bet-controls">
-                        <input type="number" class="bet-input" value="1.00" min="1">
-                        <div class="bet-buttons">
-                            <button class="bet-btn">+50</button>
-                            <button class="bet-btn">+100</button>
-                            <button class="bet-btn">+500</button>
-                        </div>
-                    </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="info-box">
+                <h3>Кирилл Коржиков</h3>
+                <div class="info-row">
+                    <div class="info-label">Возраст:</div>
+                    <div class="info-value">14 лет</div>
                 </div>
-
-                <div class="game-stats">
-                    <h3>Статистика</h3>
-                    <div class="bet-item">
-                        <span>Шанс выигрыша:</span>
-                        <span>5%</span>
-                    </div>
-                    <div class="bet-item">
-                        <span>Коэффициент:</span>
-                        <span>x22</span>
-                    </div>
-                    <div class="bet-item">
-                        <span>Выигрыш:</span>
-                        <span class="bet-win">2 ₽</span>
-                    </div>
+                <div class="info-row">
+                    <div class="info-label">Место учебы:</div>
+                    <div class="info-value">Гимназия №44</div>
                 </div>
-
-                <div class="quick-bets">
-                    <h3>Быстрые ставки</h3>
-                    <div class="bet-buttons">
-                        <button class="bet-btn">100 ₽</button>
-                        <button class="bet-btn">200 ₽</button>
-                        <button class="bet-btn">500 ₽</button>
-                        <button class="bet-btn">1000 ₽</button>
-                        <button class="bet-btn">2000 ₽</button>
-                    </div>
+                <div class="info-row">
+                    <div class="info-label">Место жительства:</div>
+                    <div class="info-value">Краснодарский край</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Рост:</div>
+                    <div class="info-value">165 см</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Вес:</div>
+                    <div class="info-value">78 кг</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Состояние:</div>
+                    <div class="info-value">В отношениях</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Лучший друг:</div>
+                    <div class="info-value">Григорий</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Девушка:</div>
+                    <div class="info-value">Анастасия</div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h3>Навигация</h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 10px;"><i class="fas fa-school"></i> Гимназия №44</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-fire"></i> Подростковая пиротехника</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-users"></i> Социальные проблемы подростков</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-home"></i> Приемные семьи в России</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-heart"></i> Подростковые отношения</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-gamepad"></i> Влияние компьютерных игр</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <h3>Категории</h3>
+                <div class="categories">
+                    <span class="category">Ученики</span>
+                    <span class="category">Краснодарский край</span>
+                    <span class="category">Подростки</span>
+                    <span class="category">Приемные дети</span>
+                    <span class="category">Пиротехника</span>
+                    <span class="category">Гимназия №44</span>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Инициализация Telegram Web App
-        let tg = window.Telegram.WebApp;
-        tg.expand();
-        
-        // Данные пользователя
-        let userData = {
-            balance: 1000,
-            betAmount: 1.00
-        };
-
-        // Обновление интерфейса
-        function updateUI() {
-            document.querySelector('.balance').textContent = userData.balance.toFixed(2) + ' ₽';
-            document.querySelector('.bet-input').value = userData.betAmount.toFixed(2);
-        }
-
-        // Обработчики кнопок
-        document.querySelectorAll('.bet-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const text = this.textContent;
-                
-                if (text === '½') {
-                    userData.betAmount = Math.max(1, userData.betAmount / 2);
-                } else if (text === 'x2') {
-                    userData.betAmount = Math.min(userData.balance, userData.betAmount * 2);
-                } else if (text === 'Макс') {
-                    userData.betAmount = userData.balance;
-                } else if (text.startsWith('+')) {
-                    const amount = parseInt(text.slice(1));
-                    userData.betAmount = Math.min(userData.balance, userData.betAmount + amount);
-                } else if (text.endsWith('₽')) {
-                    userData.betAmount = parseInt(text);
-                }
-                
-                updateUI();
-            });
-        });
-
-        // Обработчик ввода ставки
-        document.querySelector('.bet-input').addEventListener('change', function() {
-            userData.betAmount = Math.max(1, Math.min(userData.balance, parseFloat(this.value) || 1));
-            updateUI();
-        });
-
-        // Инициализация
-        updateUI();
-    </script>
+    
+    <footer>
+        <p>Статья подготовлена на основе открытых источников. Все данные носят исключительно информационный характер.</p>
+        <p>Последнее обновление: 12 мая 2023 года</p>
+    </footer>
 </body>
 </html>
