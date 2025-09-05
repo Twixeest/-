@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Саша Городилова - Энциклопедия</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #2c3e50;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0.2) 0%,
+                transparent 20%,
+                transparent 80%,
+                rgba(0, 0, 0, 0.1) 100%
+            );
+            transform: rotate(30deg);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            position: relative;
+            color: #2c3e50;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            font-size: 1.4rem;
+            position: relative;
+            color: #2c3e50;
+            opacity: 0.9;
+        }
+        
+        .content-container {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .main-content {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .sidebar {
+            flex: 1;
+            min-width: 280px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-width: 0 25px 25px 0;
+            border-style: solid;
+            border-color: #e2d1c3 #fdfcfb;
+        }
+        
+        .info-box h3 {
+            text-align: center;
+            border-bottom: 2px solid #ff9a9e;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            min-width: 140px;
+            color: #2c3e50;
+        }
+        
+        .info-value {
+            color: #6a11cb;
+            font-weight: 500;
+        }
+        
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section h2 {
+            color: #6a11cb;
+            border-bottom: 2px solid #6a11cb;
+            padding-bottom: 12px;
+            margin-bottom: 18px;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h2 i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .quote {
+            background: linear-gradient(to right, #f9f9f9, #f0f5ff);
+            border-left: 5px solid #6a11cb;
+            padding: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            color: #6a11cb;
+            opacity: 0.2;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-family: Georgia, serif;
+        }
+        
+        .timeline {
+            margin: 25px 0;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #6a11cb;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #6a11cb;
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px #6a11cb;
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: #6a11cb;
+            margin-bottom: 5px;
+        }
+        
+        .fact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .fact-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ddd;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .fact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .fact-card h4 {
+            color: #6a11cb;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 25px;
+            color: #54595d;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .category {
+            background: #e9ecef;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #6a11cb;
+        }
+        
+        .character-traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .trait {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .fact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Саша Городилова</h1>
+            <p class="subtitle">Ученица школы №6 с необычным характером</p>
+        </header>
+        
+        <div class="content-container">
+            <div class="main-content">
+                <div class="section">
+                    <h2><i class="fas fa-user"></i> Биография</h2>
+                    <p>Александра (Саша) Городилова — ученица школы №6, девочка 12 лет с необычным характером и яркой индивидуальностью. Несмотря на сложное материальное положение семьи, Саша сохраняет оптимизм и нестандартный взгляд на жизнь.</p>
+                    
+                    <p>Саша известна своим мальчишеским стилем одежды и поведения, за что иногда получает замечания от учителей. Её внешний вид — короткие волосы, спортивная одежда и кроссовки — часто вводит в заблуждение тех, кто видит её впервые.</p>
+                    
+                    <div class="quote">
+                        "Саша — уникальный ребёнок с нестандартным мышлением. Да, она иногда ведёт себя вызывающе, но у неё доброе сердце и острый ум. Просто ей нужно найти свой путь." — Классный руководитель.
+                    </div>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">2011</div>
+                            <div>Родилась в простой семье в небольшом городе</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2017</div>
+                            <div>Пошла в первый класс школы №6</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2020</div>
+                            <div>Начала проявлять интерес к "мальчишеским" увлечениям</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2022</div>
+                            <div>Сделала короткую стрижку и окончательно сменила стиль</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-date">2023</div>
+                            <div>Увлеклась скейтбордингом и хип-хоп культурой</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2><i class="fas fa-graduation-cap"></i> Образование</h2>
+                    <p>Саша учится в школе №6, где показывает средние результаты в учебе. По словам учителей, она способная девочка, но часто отвлекается на уроках и не всегда выполняет домашние задания.</p>
+                    
+                    <p>Лучшие результаты показывает на уроках физкультуры, рисования и литературы. С математикой и точными науками отношения сложные, что иногда становится причиной конфликтов с учителями.</p>
+                    
+                    <div class="fact-grid">
+                        <div class="fact-card">
+                            <h4>Успеваемость</h4>
+                            <p>Средний балл: 3.7</p>
+                            <p>Лучший предмет: Физкультура</p>
+                            <p>Сложный предмет: Математика</p>
+                        </div>
+                        <div class="fact-card">
+                            <h4>Поведение</h4>
+                            <p>Замечания: 8 за год</p>
+                            <p>Вызовы к директору: 2</p>
+                            <p>Прогулы: 5% занятий</p>
+                        </div>
+                        <div class="fact-card">
+                            <h4>Достижения</h4>
+                            <p>2 место в школьных соревнованиях по бегу</p>
+                            <p>Участие в конкурсе граффити</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2><i class="fas fa-heart"></i> Личная жизнь</h2>
+                    <p>Саша предпочитает дружить с мальчиками, считая их более интересными собеседниками. У неё есть несколько близких подруг, которые принимают её нестандартный стиль и поведение.</p>
+                    
+                    <p>Из-за материальных трудностей в семье, Саша часто не может позволить себе те вещи, которые есть у одноклассников. Это иногда становится причиной насмешек, но Саша научилась отвечать остроумными комментариями.</p>
+                    
+                    <div class="quote">
+                        "Мне не нужны куклы и платья. Лучше скейт и кепка. Я не такая, как все, и мне это нравится. Пусть говорят что хотят." — Саша о своем стиле.
+                    </div>
+                    
+                    <h3>Характерные черты:</h3>
+                    <div class="character-traits">
+                        <span class="trait">Независимая</span>
+                        <span class="trait">Остроумная</span>
+                        <span class="trait">Активная</span>
+                        <span class="trait">Непредсказуемая</span>
+                        <span class="trait">Целеустремленная</span>
+                        <span class="trait">Добрая</span>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2><i class="fas fa-fire"></i> Увлечения</h2>
+                    <p>Основные увлечения Саши традиционно считаются "мальчишескими": скейтбординг, граффити, хип-хоп музыка и видеоигры. Она проводит много времени на местной skate-площадке, где нашла единомышленников.</p>
+                    
+                    <p>Также увлекается рисованием, особенно в стиле граффити и комиксов. Её тетради заполнены рисунками и скетчами, что иногда раздражает учителей, но восхищает одноклассников.</p>
+                    
+                    <div class="fact-grid">
+                        <div class="fact-card">
+                            <h4>Скейтбординг</h4>
+                            <p>Занимается: 1 год</p>
+                            <p>Любимый трюк: Ollie</p>
+                            <p>Место: Skate-площадка в парке</p>
+                        </div>
+                        <div class="fact-card">
+                            <h4>Искусство</h4>
+                            <p>Любимый стиль: Граффити</p>
+                            <p>Участвует в конкурсах</p>
+                            <p>Рисует комиксы</p>
+                        </div>
+                        <div class="fact-card">
+                            <h4>Другие увлечения</h4>
+                            <p>Хип-хоп музыка</p>
+                            <p>Видеоигры</p>
+                            <p>Футбол с мальчишками</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="info-box">
+                    <h3>Саша Городилова</h3>
+                    <div class="info-row">
+                        <div class="info-label">Возраст:</div>
+                        <div class="info-value">12 лет</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Место учебы:</div>
+                        <div class="info-value">Школа №6</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Рост:</div>
+                        <div class="info-value">158 см</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Вес:</div>
+                        <div class="info-value">48 кг</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Стиль:</div>
+                        <div class="info-value">Спортивный/уличный</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Лучший друг:</div>
+                        <div class="info-value">Максим</div>
+                    </div>
+                    <div class="info-row">
+                        <div class="info-label">Статус:</div>
+                        <div class="info-value">Ученица</div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Навигация</h3>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 10px;"><i class="fas fa-school"></i> Школа №6</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-paint-roller"></i> Подростковое граффити</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-skating"></i> Скейтбординг для начинающих</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-tshirt"></i> Гендерно-нейтральная мода</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-music"></i> Хип-хоп культура в школе</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-gamepad"></i> Влияние видеоигр</li>
+                    </ul>
+                </div>
+                
+                <div class="info-box">
+                    <h3>Категории</h3>
+                    <div class="categories">
+                        <span class="category">Ученики</span>
+                        <span class="category">Школа №6</span>
+                        <span class="category">Подростки</span>
+                        <span class="category">Скейтбординг</span>
+                        <span class="category">Граффити</span>
+                        <span class="category">Нестандартные дети</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Статья подготовлена на основе открытых источников. Все данные носят исключительно информационный характер.</p>
+            <p>Последнее обновление: 12 мая 2023 года</p>
+        </footer>
+    </div>
+</body>
+</html>
